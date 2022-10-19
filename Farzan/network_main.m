@@ -2,6 +2,11 @@ format long
 close all
 clear all
 clc
+%%
+
+colorA = [0,0,0];
+colorB = [1,0.6,0];
+colorD = [1,0,1];
 
 %% Load data
 load('./data/JYK094_11-RandomReward_03.mat');
@@ -116,6 +121,72 @@ ylabel('DCN-SNc');
 xlabel('time[ms]')
 set(gca,'fontsize',f)
 legend('','','','Reward','Higher-reward','Omission')
+
+
+figure
+hold on
+plot(tt-4000,rec_r,'-','linewidth',lw,'Color',data.colorA);
+plot(tt-4000,rec_h,'-','linewidth',lw,'Color',data.colorB);
+plot(tt-4000,rec_o,'-','linewidth',lw,'Color',data.colorD);
+xlim(trange);  
+ylabel('a');
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Reward','Higher-reward','Omission')
+
+%% Plot sensorimotor inputs
+
+pulse = @(t,t0,t1) heaviside(t-t0).*heaviside(t1-t);
+figure
+
+subplot(3,1,1);
+hold on
+plot(tt-4000,J_cue*pulse(tt,t0_cue,t1_cue)-J_rew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorD);
+
+xlim(trange);  
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Omission')
+
+subplot(3,1,2);
+hold on
+plot(tt-4000,J_cue*pulse(tt,t0_cue,t1_cue) + J_rew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorA);
+
+xlim(trange);  
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Reward')
+
+subplot(3,1,3);
+hold on
+plot(tt-4000,J_cue*pulse(tt,t0_cue,t1_cue)+J_hrew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorB);
+
+xlim(trange);  
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Higher-reward')
+
+
+figure
+subplot(2,1,1);
+hold on
+plot(tt-4000,J_cue*pulse(tt,t0_cue,t1_cue),'-','linewidth',lw,'Color','blue');
+xlim(trange);  
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Cue')
+
+subplot(2,1,2);
+hold on
+plot(tt-4000,J_hrew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorB);
+plot(tt-4000,-J_rew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorD);
+plot(tt-4000,J_rew*pulse(tt,t0_rew,t1_rew),'-','linewidth',lw,'Color',data.colorA);
+
+xlim(trange);  
+xlabel('time[ms]')
+set(gca,'fontsize',f)
+legend('Higher-reward','Omission','Reward')
+
 
 %% Plot nullclines
 figure
@@ -239,9 +310,9 @@ J2i1e = 0;
 J2e1e = 0.89;    % 0.9
 J3i1e = 0.21;  % 0.5
 
-J2i2e = 2.7;  %1
-J2e2i = 4.3;  %1
-J2e3i = 1.001;  % 0.63
+J2i2e = 0.1*2.7;  %1
+J2e2i = 0.2*4.3;  %1
+J2e3i = 0.2*1.001;  % 0.63
 
 J1e4e = 0;
 J4e1e = 0;
