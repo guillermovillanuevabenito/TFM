@@ -20,7 +20,7 @@ Q=@(a,tau,Delta) (1-a).*exp(-Delta/tau);
 Xbar=@(a,tau,Delta,Xinf) (1-exp(-Delta/tau))*Xinf./(1-(1-a).*exp(-Delta/tau));
 Zbar=@(a,tau,Delta,Zinf) ((1-exp(-Delta/tau))*(1-a)*Zinf+a)./(1-(1-a).*exp(-Delta/tau));
 
-taudep_range = [100];
+%taudep_range = [100];
 
 max_amp_num_var = [];
 max_peak_num_var = [];
@@ -29,14 +29,13 @@ max_amp_num_mean = [];
 max_amp_jit_var = [];
 max_amp_jit_mean = [];
 
-sigma_range = 0.25;
-
-
 var_mean_jitter_amp = [];
 var_std_jitter_amp = [];
 
 var_mean_jitter_peak = [];
 var_std_jitter_peak = [];
+
+sigma_range = 0.25;
 
 %%%
 for sigma=sigma_range
@@ -68,13 +67,9 @@ v_amp_jit_var = [];
 %%%
 
 SpkFreqin_range = 1:10:200;
-%SpkFreqin_range = 100;
-
 
 %%% Loop in frequencies
 for SpkFreqin = SpkFreqin_range
-
-    %SpkFreqin
 
     % Parameters
      
