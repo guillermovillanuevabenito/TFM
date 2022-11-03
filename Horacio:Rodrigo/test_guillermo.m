@@ -275,25 +275,13 @@ end
 
 f1 = figure();
 f1.Position = [10 10 1000 400];
+
 subplot(1,2,1);
 x = SpkFreqin_range;
 plot(x,v_amp_per_mean,'g', 'LineWidth', 2)
 hold on
 plot(x, v_amp_jit_mean, 'k', 'LineWidth', 2);
 plot(x, v_amp_num_mean, 'b', 'LineWidth', 2);
-%plot(x, v_amp_anl_mean, 'r', 'LineWidth', 2);
-
-
-ylabel('V,amp');
-xlabel('Rate [Hz]')
-set(gca,'fontsize',24);
-
-%curve1 = v_amp_anl_mean-sqrt(v_amp_anl_var);
-%curve2 = v_amp_anl_mean+sqrt(v_amp_anl_var);
-%x2 = [x, fliplr(x)];
-%inBetween = [curve1, fliplr(curve2)];
-%fill(x2, inBetween, 'r','FaceAlpha',0.1,'LineStyle','none');
-
 
 curve1 = v_amp_num_mean-sqrt(v_amp_num_var);
 curve2 = v_amp_num_mean+sqrt(v_amp_num_var);
@@ -307,11 +295,11 @@ curve2 = v_amp_jit_mean+sqrt(v_amp_jit_var);
 x2 = [x, fliplr(x)];
 inBetween = [curve1, fliplr(curve2)];
 fill(x2, inBetween, 'k','FaceAlpha',0.2,'LineStyle','none');
-legend('Periodic','Jittered','Poisson','','')
 
+legend('Periodic','Jittered','Poisson','','')
+ylabel('V,amp');
 xlabel('Rate [Hz]')
 set(gca,'fontsize',24);
-
 
 
 subplot(1,2,2);
